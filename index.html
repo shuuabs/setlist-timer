@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="SETLIST" />
+  <meta name="theme-color" content="#0f0f0f" />
+  <title>セットリストタイマー</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      background: #0f0f0f;
+      color: #e8e8e8;
+      font-family: -apple-system, 'Helvetica Neue', sans-serif;
+      overscroll-behavior: none;
+    }
+
+    #app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: env(safe-area-inset-top, 16px) 16px env(safe-area-inset-bottom, 16px);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0 16px;
+    }
+    .app-title { font-size: 17px; font-weight: 600; color: #f0f0f0; letter-spacing: 0.05em; }
+    .app-title span { color: #d4ff00; }
+    .subtitle { font-size: 12px; color: #666; margin-top: 2px; }
+
+    /* ── Timer ── */
+    .remaining-block {
+      text-align: center;
+      padding: 8px 0 4px;
+    }
+    .remaining-val {
+      font-size: 23vw;
+      font-weight: 700;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      color: #d4ff00;
+      text-shadow: 0 0 30px #d4ff0099, 0 0 60px #d4ff0044;
+      letter-spacing: -0.02em;
+    }
+    .remaining-val.over {
+      color: #ff3b3b;
+      text-shadow: 0 0 30px #ff3b3b99, 0 0 60px #ff3b3b44;
+    }
+
+    /* ── BPM dot ── */
+    .bpm-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 40px;
+      margin: 4px 0;
+    }
+    .bpm-dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: #d4ff00;
+      box-shadow: 0 0 14px #d4ff00cc, 0 0 28px #d4ff0066;
+      opacity: 0;
+      transition: opacity 0.04s;
+      flex-shrink: 0;
+    }
+    .bpm-dot.on { opacity: 1; }
+    .bpm-label { font-size: 13px; color: #555; letter-spacing: 0.05em; }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      padding: 10px 0 14px;
+    }
+    .btn {
+      border: 1.5px solid #fff;
+      border-radius: 10px;
+      background: transparent;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 18px;
+      touch-action: manipulation;
+      min-height: 48px;
+    }
+    .btn.main { padding: 12px 28px; font-size: 16px; }
+    .btn.sm { padding: 10px 14px; font-size: 14px; }
+    .btn.danger { border-color: #f87171; color: #f87171; }
+
+    /* ── Song list ── */
+    .section-label {
+      font-size: 10px;
+      color: #444;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 8px;
+      padding-left: 2px;
+    }
+    .song-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+
+    .song-item {
+      background: #1a1a1a;
+      border: 0.5px solid #2a2a2a;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .song-item.active { border-color: #d4ff00; box-shadow: 0 0 10px #d4ff0033; }
+    .song-item.done { opacity: 0.3; }
+
+    .song-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 14px;
+      cursor: pointer;
+      user-select: none;
+      touch-action: manipulation;
+      min-height: 72px;
+    }
+    .song-item.active .song-row { background: #161a00; }
+
+    .song-num { font-size: 14px; color: #444; width: 22px; text-align: right; flex-shrink: 0; }
+    .song-name { flex: 1; font-size: 20px; font-weight: 600; color: #ddd; line-height: 1.2; }
+    .song-item.active .song-name { color: #d4ff00; }
+    .song-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
+    .song-dur { font-size: 20px; color: #555; font-variant-numeric: tabular-nums; font-weight: 500; }
+    .song-item.active .song-dur { color: #aacc00; }
+    .song-bpm-badge { font-size: 12px; color: #444; }
+    .song-item.active .song-bpm-badge { color: #777; }
+
+    .song-edit-btn, .song-del-btn {
+      background: none; border: none; cursor: pointer; padding: 6px;
+      border-radius: 6px; font-size: 22px; display: none; flex-shrink: 0;
+      touch-action: manipulation; min-width: 40px; min-height: 40px;
+      align-items: center; justify-content: center;
+    }
+    .song-edit-btn { color: #555; }
+    .song-del-btn { color: #f87171; }
+    .edit-mode .song-edit-btn,
+    .edit-mode .song-del-btn { display: flex; }
+
+    .song-inline-edit {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px 14px;
+      border-top: 0.5px solid #2a2a2a;
+      background: #141414;
+    }
+    .song-inline-edit.open { display: flex; }
+    .song-inline-edit input {
+      background: #1f1f1f;
+      border: 0.5px solid #333;
+      border-radius: 8px;
+      color: #e0e0e0;
+      padding: 12px 14px;
+      font-size: 16px;
+      outline: none;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    .song-inline-edit input:focus { border-color: #d4ff00; }
+    .inline-time-row { display: flex; gap: 8px; }
+    .inline-time-row input { flex: 1; }
+    .inline-save-btn { margin-top: 2px; }
+
+    .divider { height: 1px; background: #2a2a2a; margin: 4px 0; border-radius: 1px; }
+
+    /* ── Add panel ── */
+    .add-panel {
+      display: none;
+      border-top: 0.5px solid #2a2a2a;
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+    .add-panel.open { display: block; }
+    .add-field { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+    .add-field input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 0.5px solid #333;
+      border-radius: 10px;
+      color: #e0e0e0;
+      padding: 14px 16px;
+      font-size: 17px;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .add-field input:focus { border-color: #d4ff00; }
+    .add-time-row { display: flex; gap: 8px; }
+    .add-time-row input { flex: 1; }
+    .input-label { font-size: 11px; color: #555; margin-bottom: 4px; letter-spacing: 0.04em; }
+    .add-actions { display: flex; gap: 8px; }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div>
+      <div class="app-title"><span>●</span> SETLIST TIMER</div>
+      <div class="subtitle" id="show-status">準備中</div>
+    </div>
+    <button class="btn sm" id="edit-toggle-btn" onclick="toggleEdit()">
+      <i class="ti ti-edit"></i> 編集
+    </button>
+  </div>
+
+  <div class="remaining-block">
+    <div class="remaining-val" id="remaining-val">—</div>
+  </div>
+
+  <div class="bpm-row">
+    <div class="bpm-dot" id="bpm-dot"></div>
+    <div class="bpm-label" id="bpm-label"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn sm" onclick="prevSong()"><i class="ti ti-player-skip-back"></i></button>
+    <button class="btn main" onclick="togglePlay()">
+      <i class="ti ti-player-play" id="play-icon"></i>
+      <span id="play-label">スタート</span>
+    </button>
+    <button class="btn sm" onclick="nextSong()"><i class="ti ti-player-skip-forward"></i></button>
+    <button class="btn sm" onclick="resetAll()"><i class="ti ti-refresh"></i></button>
+  </div>
+
+  <div class="section-label">セットリスト</div>
+  <div class="song-list" id="song-list"></div>
+
+  <div class="add-panel" id="add-panel">
+    <div class="section-label">曲を追加</div>
+    <div class="add-field">
+      <div>
+        <div class="input-label">曲名</div>
+        <input type="text" id="new-name" placeholder="曲名" />
+      </div>
+      <div class="add-time-row">
+        <div style="flex:1">
+          <div class="input-label">分</div>
+          <input type="number" id="new-min" min="0" max="30" value="3" inputmode="numeric" />
+        </div>
+        <div style="flex:1">
+          <div class="input-label">秒</div>
+          <input type="number" id="new-sec" min="0" max="59" value="30" inputmode="numeric" />
+        </div>
+        <div style="flex:1">
+          <div class="input-label">BPM（任意）</div>
+          <input type="number" id="new-bpm" placeholder="—" min="40" max="300" inputmode="numeric" />
+        </div>
+      </div>
+    </div>
+    <div class="add-actions">
+      <button class="btn sm" onclick="addSong()"><i class="ti ti-plus"></i> 追加</button>
+      <button class="btn sm danger" onclick="clearAll()"><i class="ti ti-trash"></i> 全削除</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DEFAULT_SONGS = [
+  { name: "オープニング", dur: 240, bpm: 128 },
+  { name: "夜明けの向こうへ", dur: 210, bpm: 95 },
+  { name: "光の中で", dur: 195, bpm: 0 },
+  { name: "遠い記憶", dur: 225, bpm: 72 },
+  { name: "嵐の前", dur: 200, bpm: 140 },
+  { name: "MC", dur: 300, bpm: 0 },
+  { name: "アンコール曲", dur: 240, bpm: 110 },
+];
+
+let songs = JSON.parse(localStorage.getItem('sl_songs_v2') || 'null') || DEFAULT_SONGS.map(s=>({...s}));
+let currentIdx = 0, elapsed = 0, playing = false, timer = null;
+let editOpen = false, openEditIdx = -1;
+let finished = false, overSeconds = 0, bpmTimer = null;
+
+function fmt(s) { s=Math.max(0,Math.round(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+function remainingDur() { if(!songs.length) return 0; return songs.slice(currentIdx).reduce((a,s)=>a+s.dur,0)-elapsed; }
+function save() { localStorage.setItem('sl_songs_v2', JSON.stringify(songs)); }
+
+function startBpm(bpm) {
+  stopBpm();
+  if (!bpm || bpm <= 0) return;
+  const interval = 60000 / bpm;
+  const dot = document.getElementById('bpm-dot');
+  const flash = () => { dot.classList.add('on'); setTimeout(() => dot.classList.remove('on'), Math.min(interval * 0.25, 120)); };
+  flash();
+  bpmTimer = setInterval(flash, interval);
+}
+function stopBpm() {
+  if (bpmTimer) { clearInterval(bpmTimer); bpmTimer = null; }
+  const dot = document.getElementById('bpm-dot');
+  if (dot) dot.classList.remove('on');
+}
+function updateBpm() {
+  const cur = songs[currentIdx];
+  const lbl = document.getElementById('bpm-label');
+  if (playing && cur && cur.bpm > 0) { lbl.textContent = cur.bpm + ' BPM'; startBpm(cur.bpm); }
+  else { lbl.textContent = ''; stopBpm(); }
+}
+
+function makeSongItem(s, i, isActive, isDone) {
+  const item = document.createElement('div');
+  item.className = 'song-item' + (isActive ? ' active' : '') + (isDone ? ' done' : '');
+
+  const row = document.createElement('div');
+  row.className = 'song-row';
+  row.onclick = () => { if (!editOpen) jumpTo(i); };
+  row.innerHTML = `
+    <span class="song-num">${i+1}</span>
+    <span class="song-name">${s.name}</span>
+    <span class="song-meta">
+      <span class="song-dur">${fmt(s.dur)}</span>
+      ${s.bpm > 0 ? `<span class="song-bpm-badge">${s.bpm} BPM</span>` : ''}
+    </span>
+  `;
+
+  const editBtn = document.createElement('button');
+  editBtn.className = 'song-edit-btn';
+  editBtn.innerHTML = '<i class="ti ti-pencil"></i>';
+  editBtn.onclick = e => { e.stopPropagation(); openEditIdx = openEditIdx === i ? -1 : i; render(); };
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'song-del-btn';
+  delBtn.innerHTML = '<i class="ti ti-trash"></i>';
+  delBtn.onclick = e => {
+    e.stopPropagation();
+    songs.splice(i, 1);
+    if (currentIdx >= songs.length) currentIdx = Math.max(0, songs.length - 1);
+    if (openEditIdx === i) openEditIdx = -1;
+    save(); render();
+  };
+
+  row.appendChild(editBtn);
+  row.appendChild(delBtn);
+  item.appendChild(row);
+
+  if (editOpen && openEditIdx === i) {
+    const er = document.createElement('div');
+    er.className = 'song-inline-edit open';
+    er.innerHTML = `
+      <input type="text" id="ei-name-${i}" value="${s.name}" placeholder="曲名" />
+      <div class="inline-time-row">
+        <input type="number" id="ei-min-${i}" value="${Math.floor(s.dur/60)}" min="0" max="30" placeholder="分" inputmode="numeric" />
+        <input type="number" id="ei-sec-${i}" value="${s.dur%60}" min="0" max="59" placeholder="秒" inputmode="numeric" />
+        <input type="number" id="ei-bpm-${i}" value="${s.bpm||''}" min="40" max="300" placeholder="BPM" inputmode="numeric" />
+      </div>
+      <button class="btn sm inline-save-btn" onclick="saveInlineEdit(${i})"><i class="ti ti-check"></i> 保存</button>
+    `;
+    item.appendChild(er);
+  }
+  return item;
+}
+
+function render() {
+  const list = document.getElementById('song-list');
+  list.innerHTML = '';
+  list.className = 'song-list' + (editOpen ? ' edit-mode' : '');
+
+  if (editOpen) {
+    songs.forEach((s, i) => list.appendChild(makeSongItem(s, i, i === currentIdx, i < currentIdx)));
+  } else {
+    const upcoming = songs.map((s,i)=>({s,i})).filter(({i})=>i>=currentIdx);
+    const done = songs.map((s,i)=>({s,i})).filter(({i})=>i<currentIdx);
+    upcoming.forEach(({s,i}) => list.appendChild(makeSongItem(s,i,i===currentIdx,false)));
+    if (done.length) {
+      const d = document.createElement('div'); d.className='divider'; list.appendChild(d);
+      done.forEach(({s,i}) => list.appendChild(makeSongItem(s,i,false,true)));
+    }
+  }
+
+  const remEl = document.getElementById('remaining-val');
+  if (!songs.length) { remEl.textContent='—'; remEl.className='remaining-val'; }
+  else if (finished) { remEl.textContent='+'+fmt(overSeconds); remEl.className='remaining-val over'; }
+  else { remEl.textContent=fmt(remainingDur()); remEl.className='remaining-val'; }
+
+  document.getElementById('show-status').textContent =
+    finished ? '🔴 超過中' : playing ? '⚡ 演奏中' : currentIdx>0 ? '一時停止中' : '準備中';
+  document.getElementById('add-panel').className = 'add-panel' + (editOpen ? ' open' : '');
+  document.getElementById('edit-toggle-btn').innerHTML = editOpen
+    ? '<i class="ti ti-check"></i> 完了'
+    : '<i class="ti ti-edit"></i> 編集';
+}
+
+function saveInlineEdit(i) {
+  const name = document.getElementById(`ei-name-${i}`).value.trim();
+  const dur = (parseInt(document.getElementById(`ei-min-${i}`).value)||0)*60+(parseInt(document.getElementById(`ei-sec-${i}`).value)||0);
+  const bpm = parseInt(document.getElementById(`ei-bpm-${i}`).value)||0;
+  if (!name || dur<=0) return;
+  songs[i]={name,dur,bpm}; openEditIdx=-1; save(); render(); updateBpm();
+}
+
+function toggleEdit() { editOpen=!editOpen; if(!editOpen) openEditIdx=-1; render(); }
+
+function tick() {
+  if (finished) { overSeconds++; render(); return; }
+  elapsed++;
+  if (elapsed >= songs[currentIdx].dur) {
+    elapsed=0; currentIdx++;
+    if (currentIdx >= songs.length) {
+      currentIdx=songs.length-1; finished=true; overSeconds=0;
+      stopBpm(); document.getElementById('bpm-label').textContent='';
+    } else { updateBpm(); }
+  }
+  render();
+}
+
+function startPlay() {
+  if (!songs.length) return;
+  playing=true; timer=setInterval(tick,1000);
+  document.getElementById('play-icon').className='ti ti-player-pause';
+  document.getElementById('play-label').textContent='一時停止';
+  render(); updateBpm();
+}
+function stopPlay() {
+  playing=false; clearInterval(timer); stopBpm();
+  document.getElementById('bpm-label').textContent='';
+  document.getElementById('play-icon').className='ti ti-player-play';
+  document.getElementById('play-label').textContent='スタート';
+  render();
+}
+function togglePlay() { playing?stopPlay():startPlay(); }
+function nextSong() { if(finished)return; elapsed=0; if(currentIdx<songs.length-1)currentIdx++; render(); updateBpm(); }
+function prevSong() { finished=false; overSeconds=0; elapsed=0; if(currentIdx>0)currentIdx--; render(); updateBpm(); }
+function jumpTo(i) { finished=false; overSeconds=0; elapsed=0; currentIdx=i; render(); updateBpm(); }
+function resetAll() { stopPlay(); elapsed=0; currentIdx=0; finished=false; overSeconds=0; render(); }
+function addSong() {
+  const name=document.getElementById('new-name').value.trim();
+  const dur=(parseInt(document.getElementById('new-min').value)||0)*60+(parseInt(document.getElementById('new-sec').value)||0);
+  const bpm=parseInt(document.getElementById('new-bpm').value)||0;
+  if(!name||dur<=0)return;
+  songs.push({name,dur,bpm}); save();
+  document.getElementById('new-name').value='';
+  document.getElementById('new-bpm').value='';
+  render();
+}
+function clearAll() {
+  if(!confirm('全曲削除しますか？'))return;
+  songs=[]; currentIdx=0; elapsed=0; finished=false; overSeconds=0; openEditIdx=-1;
+  stopBpm(); save(); render();
+}
+
+render();
+</script>
+</body>
+</html>
