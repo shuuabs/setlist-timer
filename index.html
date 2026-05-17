@@ -29,22 +29,48 @@
       flex-direction: column;
     }
 
-    /* ── Header ── */
     .header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 0 16px;
+      padding: 12px 0 10px;
     }
     .app-title { font-size: 17px; font-weight: 600; color: #f0f0f0; letter-spacing: 0.05em; }
     .app-title span { color: #d4ff00; }
     .subtitle { font-size: 12px; color: #666; margin-top: 2px; }
 
-    /* ── Timer ── */
-    .remaining-block {
-      text-align: center;
-      padding: 8px 0 4px;
+    /* ── パターンバー ── */
+    .pattern-bar {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
     }
+    .pattern-bar::-webkit-scrollbar { display: none; }
+    .pattern-chip {
+      flex-shrink: 0;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid #333;
+      background: #1a1a1a;
+      color: #888;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      touch-action: manipulation;
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .pattern-chip.active { border-color: #d4ff00; color: #d4ff00; background: #161a00; }
+    .pattern-chip.add-btn { border-color: #444; color: #666; }
+    .pattern-chip.del-btn { border-color: #7f1d1d; color: #f87171; }
+
+    .remaining-block { text-align: center; padding: 6px 0 2px; }
     .remaining-val {
       font-size: 23vw;
       font-weight: 700;
@@ -59,17 +85,16 @@
       text-shadow: 0 0 30px #ff3b3b99, 0 0 60px #ff3b3b44;
     }
 
-    /* ── BPM dot ── */
     .bpm-row {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      height: 40px;
-      margin: 4px 0;
+      height: 38px;
+      margin: 2px 0;
     }
     .bpm-dot {
-      width: 26px; height: 26px; border-radius: 50%;
+      width: 24px; height: 24px; border-radius: 50%;
       background: #d4ff00;
       box-shadow: 0 0 14px #d4ff00cc, 0 0 28px #d4ff0066;
       opacity: 0;
@@ -79,12 +104,11 @@
     .bpm-dot.on { opacity: 1; }
     .bpm-label { font-size: 13px; color: #555; letter-spacing: 0.05em; }
 
-    /* ── Controls ── */
     .controls {
       display: flex;
       gap: 8px;
       justify-content: center;
-      padding: 10px 0 14px;
+      padding: 8px 0 12px;
     }
     .btn {
       border: 1.5px solid #fff;
@@ -106,7 +130,6 @@
     .btn.sm { padding: 10px 14px; font-size: 14px; }
     .btn.danger { border-color: #f87171; color: #f87171; }
 
-    /* ── Song list ── */
     .section-label {
       font-size: 10px;
       color: #444;
@@ -152,7 +175,7 @@
     .song-item.active .song-name { color: #d4ff00; }
     .song-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
     .song-dur { font-size: 20px; color: #555; font-variant-numeric: tabular-nums; font-weight: 500; }
-    .song-item.active .song-dur { color: #aacc00; }
+    .song-item.active .song-dur { color: #d4ff00; font-size: 22px; }
     .song-bpm-badge { font-size: 12px; color: #444; }
     .song-item.active .song-bpm-badge { color: #777; }
 
@@ -190,11 +213,9 @@
     .song-inline-edit input:focus { border-color: #d4ff00; }
     .inline-time-row { display: flex; gap: 8px; }
     .inline-time-row input { flex: 1; }
-    .inline-save-btn { margin-top: 2px; }
 
-    .divider { height: 1px; background: #2a2a2a; margin: 4px 0; border-radius: 1px; }
+    .divider { height: 1px; background: #2a2a2a; margin: 4px 0; }
 
-    /* ── Add panel ── */
     .add-panel {
       display: none;
       border-top: 0.5px solid #2a2a2a;
@@ -219,6 +240,41 @@
     .add-time-row input { flex: 1; }
     .input-label { font-size: 11px; color: #555; margin-bottom: 4px; letter-spacing: 0.04em; }
     .add-actions { display: flex; gap: 8px; }
+
+    /* ── モーダル ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #1a1a1a;
+      border: 0.5px solid #333;
+      border-radius: 16px;
+      padding: 22px;
+      width: 88%;
+      max-width: 360px;
+    }
+    .modal h3 { font-size: 17px; color: #f0f0f0; margin-bottom: 14px; font-weight: 600; }
+    .modal input {
+      width: 100%;
+      background: #111;
+      border: 0.5px solid #444;
+      border-radius: 10px;
+      color: #e0e0e0;
+      padding: 14px 16px;
+      font-size: 17px;
+      outline: none;
+      margin-bottom: 14px;
+      -webkit-appearance: none;
+    }
+    .modal input:focus { border-color: #d4ff00; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
   </style>
 </head>
 <body>
@@ -232,6 +288,8 @@
       <i class="ti ti-edit"></i> 編集
     </button>
   </div>
+
+  <div class="pattern-bar" id="pattern-bar"></div>
 
   <div class="remaining-block">
     <div class="remaining-val" id="remaining-val">—</div>
@@ -279,192 +337,230 @@
     </div>
     <div class="add-actions">
       <button class="btn sm" onclick="addSong()"><i class="ti ti-plus"></i> 追加</button>
-      <button class="btn sm danger" onclick="clearAll()"><i class="ti ti-trash"></i> 全削除</button>
+      <button class="btn sm danger" onclick="clearSongs()"><i class="ti ti-trash"></i> 全削除</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title">新しいセットリスト</h3>
+    <input type="text" id="modal-input" placeholder="例：ライブA、リハ用 など" maxlength="20" />
+    <div class="modal-actions">
+      <button class="btn sm" onclick="closeModal()">キャンセル</button>
+      <button class="btn sm" onclick="modalOk()"><i class="ti ti-check"></i> OK</button>
     </div>
   </div>
 </div>
 
 <script>
-const DEFAULT_SONGS = [
-  { name: "オープニング", dur: 240, bpm: 128 },
-  { name: "夜明けの向こうへ", dur: 210, bpm: 95 },
-  { name: "光の中で", dur: 195, bpm: 0 },
-  { name: "遠い記憶", dur: 225, bpm: 72 },
-  { name: "嵐の前", dur: 200, bpm: 140 },
-  { name: "MC", dur: 300, bpm: 0 },
-  { name: "アンコール曲", dur: 240, bpm: 110 },
-];
+function loadData() {
+  return JSON.parse(localStorage.getItem('sl_multi_v1') || 'null') || {
+    patterns: [
+      { id: 'p1', name: 'ライブA', songs: [
+        { name: "オープニング", dur: 240, bpm: 128 },
+        { name: "夜明けの向こうへ", dur: 210, bpm: 95 },
+        { name: "光の中で", dur: 195, bpm: 0 },
+        { name: "遠い記憶", dur: 225, bpm: 72 },
+        { name: "アンコール曲", dur: 240, bpm: 110 },
+      ]},
+      { id: 'p2', name: 'リハ用', songs: [
+        { name: "サウンドチェック", dur: 120, bpm: 0 },
+        { name: "嵐の前", dur: 200, bpm: 140 },
+        { name: "MC", dur: 300, bpm: 0 },
+      ]},
+    ],
+    currentPatternId: 'p1'
+  };
+}
 
-let songs = JSON.parse(localStorage.getItem('sl_songs_v2') || 'null') || DEFAULT_SONGS.map(s=>({...s}));
+let data = loadData();
 let currentIdx = 0, elapsed = 0, playing = false, timer = null;
 let editOpen = false, openEditIdx = -1;
 let finished = false, overSeconds = 0, bpmTimer = null;
+let modalMode = null;
 
+function save() { localStorage.setItem('sl_multi_v1', JSON.stringify(data)); }
+function currentPattern() { return data.patterns.find(p => p.id === data.currentPatternId) || data.patterns[0]; }
+function songs() { return currentPattern().songs; }
 function fmt(s) { s=Math.max(0,Math.round(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
-function remainingDur() { if(!songs.length) return 0; return songs.slice(currentIdx).reduce((a,s)=>a+s.dur,0)-elapsed; }
-function save() { localStorage.setItem('sl_songs_v2', JSON.stringify(songs)); }
+function remainingDur() { const ss=songs(); if(!ss.length) return 0; return ss.slice(currentIdx).reduce((a,s)=>a+s.dur,0)-elapsed; }
+function currentSongRemaining() { const ss=songs(); if(!ss[currentIdx]) return 0; return Math.max(0, ss[currentIdx].dur - elapsed); }
+function genId() { return 'p' + Date.now(); }
 
 function startBpm(bpm) {
-  stopBpm();
-  if (!bpm || bpm <= 0) return;
-  const interval = 60000 / bpm;
+  stopBpm(); if (!bpm||bpm<=0) return;
+  const interval = 60000/bpm;
   const dot = document.getElementById('bpm-dot');
-  const flash = () => { dot.classList.add('on'); setTimeout(() => dot.classList.remove('on'), Math.min(interval * 0.25, 120)); };
-  flash();
-  bpmTimer = setInterval(flash, interval);
+  const flash = () => { dot.classList.add('on'); setTimeout(()=>dot.classList.remove('on'), Math.min(interval*0.25,120)); };
+  flash(); bpmTimer = setInterval(flash, interval);
 }
 function stopBpm() {
-  if (bpmTimer) { clearInterval(bpmTimer); bpmTimer = null; }
-  const dot = document.getElementById('bpm-dot');
-  if (dot) dot.classList.remove('on');
+  if(bpmTimer){clearInterval(bpmTimer);bpmTimer=null;}
+  const d=document.getElementById('bpm-dot'); if(d) d.classList.remove('on');
 }
 function updateBpm() {
-  const cur = songs[currentIdx];
-  const lbl = document.getElementById('bpm-label');
-  if (playing && cur && cur.bpm > 0) { lbl.textContent = cur.bpm + ' BPM'; startBpm(cur.bpm); }
-  else { lbl.textContent = ''; stopBpm(); }
+  const ss=songs(); const cur=ss[currentIdx]; const lbl=document.getElementById('bpm-label');
+  if(playing&&cur&&cur.bpm>0){lbl.textContent=cur.bpm+' BPM';startBpm(cur.bpm);}
+  else{lbl.textContent='';stopBpm();}
+}
+
+function renderPatternBar() {
+  const bar = document.getElementById('pattern-bar');
+  bar.innerHTML = '';
+  data.patterns.forEach(p => {
+    const chip = document.createElement('div');
+    chip.className = 'pattern-chip' + (p.id===data.currentPatternId?' active':'');
+    chip.textContent = p.name;
+    chip.onclick = () => {
+      if (p.id===data.currentPatternId && editOpen) { openRenameModal(p); return; }
+      switchPattern(p.id);
+    };
+    bar.appendChild(chip);
+  });
+  if (editOpen) {
+    const addChip = document.createElement('div');
+    addChip.className = 'pattern-chip add-btn';
+    addChip.innerHTML = '<i class="ti ti-plus"></i> 新規';
+    addChip.onclick = openAddModal;
+    bar.appendChild(addChip);
+
+    if (data.patterns.length > 1) {
+      const delChip = document.createElement('div');
+      delChip.className = 'pattern-chip del-btn';
+      delChip.innerHTML = '<i class="ti ti-trash"></i> 削除';
+      delChip.onclick = deletePattern;
+      bar.appendChild(delChip);
+    }
+  }
+}
+
+function switchPattern(id) {
+  stopPlay(); elapsed=0; currentIdx=0; finished=false; overSeconds=0;
+  data.currentPatternId=id; save(); render();
+}
+function openAddModal() {
+  modalMode='add';
+  document.getElementById('modal-title').textContent='新しいセットリスト';
+  document.getElementById('modal-input').value='';
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('modal-input').focus(),100);
+}
+function openRenameModal(p) {
+  modalMode='rename';
+  document.getElementById('modal-title').textContent='名前を変更';
+  document.getElementById('modal-input').value=p.name;
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('modal-input').focus(),100);
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+function modalOk() {
+  const name=document.getElementById('modal-input').value.trim();
+  if(!name)return;
+  if(modalMode==='add'){
+    const id=genId();
+    data.patterns.push({id,name,songs:[]});
+    data.currentPatternId=id;
+    stopPlay(); elapsed=0; currentIdx=0; finished=false; overSeconds=0;
+  } else if(modalMode==='rename'){
+    currentPattern().name=name;
+  }
+  save(); closeModal(); render();
+}
+function deletePattern() {
+  if(data.patterns.length<=1)return;
+  if(!confirm(`「${currentPattern().name}」を削除しますか？`))return;
+  const idx=data.patterns.findIndex(p=>p.id===data.currentPatternId);
+  data.patterns.splice(idx,1);
+  data.currentPatternId=data.patterns[Math.max(0,idx-1)].id;
+  stopPlay(); elapsed=0; currentIdx=0; finished=false; overSeconds=0;
+  save(); render();
 }
 
 function makeSongItem(s, i, isActive, isDone) {
   const item = document.createElement('div');
-  item.className = 'song-item' + (isActive ? ' active' : '') + (isDone ? ' done' : '');
-
+  item.className = 'song-item'+(isActive?' active':'')+(isDone?' done':'');
+  const displayTime = (isActive&&playing) ? fmt(currentSongRemaining()) : fmt(s.dur);
   const row = document.createElement('div');
   row.className = 'song-row';
-  row.onclick = () => { if (!editOpen) jumpTo(i); };
-  row.innerHTML = `
-    <span class="song-num">${i+1}</span>
-    <span class="song-name">${s.name}</span>
-    <span class="song-meta">
-      <span class="song-dur">${fmt(s.dur)}</span>
-      ${s.bpm > 0 ? `<span class="song-bpm-badge">${s.bpm} BPM</span>` : ''}
-    </span>
-  `;
+  row.onclick = () => { if(!editOpen) jumpTo(i); };
+  row.innerHTML = `<span class="song-num">${i+1}</span><span class="song-name">${s.name}</span><span class="song-meta"><span class="song-dur">${displayTime}</span>${s.bpm>0?`<span class="song-bpm-badge">${s.bpm} BPM</span>`:''}</span>`;
 
-  const editBtn = document.createElement('button');
-  editBtn.className = 'song-edit-btn';
-  editBtn.innerHTML = '<i class="ti ti-pencil"></i>';
-  editBtn.onclick = e => { e.stopPropagation(); openEditIdx = openEditIdx === i ? -1 : i; render(); };
+  const editBtn = document.createElement('button'); editBtn.className='song-edit-btn'; editBtn.innerHTML='<i class="ti ti-pencil"></i>';
+  editBtn.onclick = e => { e.stopPropagation(); openEditIdx=openEditIdx===i?-1:i; render(); };
+  const delBtn = document.createElement('button'); delBtn.className='song-del-btn'; delBtn.innerHTML='<i class="ti ti-trash"></i>';
+  delBtn.onclick = e => { e.stopPropagation(); songs().splice(i,1); if(currentIdx>=songs().length)currentIdx=Math.max(0,songs().length-1); if(openEditIdx===i)openEditIdx=-1; save(); render(); };
+  row.appendChild(editBtn); row.appendChild(delBtn); item.appendChild(row);
 
-  const delBtn = document.createElement('button');
-  delBtn.className = 'song-del-btn';
-  delBtn.innerHTML = '<i class="ti ti-trash"></i>';
-  delBtn.onclick = e => {
-    e.stopPropagation();
-    songs.splice(i, 1);
-    if (currentIdx >= songs.length) currentIdx = Math.max(0, songs.length - 1);
-    if (openEditIdx === i) openEditIdx = -1;
-    save(); render();
-  };
-
-  row.appendChild(editBtn);
-  row.appendChild(delBtn);
-  item.appendChild(row);
-
-  if (editOpen && openEditIdx === i) {
-    const er = document.createElement('div');
-    er.className = 'song-inline-edit open';
-    er.innerHTML = `
-      <input type="text" id="ei-name-${i}" value="${s.name}" placeholder="曲名" />
-      <div class="inline-time-row">
-        <input type="number" id="ei-min-${i}" value="${Math.floor(s.dur/60)}" min="0" max="30" placeholder="分" inputmode="numeric" />
-        <input type="number" id="ei-sec-${i}" value="${s.dur%60}" min="0" max="59" placeholder="秒" inputmode="numeric" />
-        <input type="number" id="ei-bpm-${i}" value="${s.bpm||''}" min="40" max="300" placeholder="BPM" inputmode="numeric" />
-      </div>
-      <button class="btn sm inline-save-btn" onclick="saveInlineEdit(${i})"><i class="ti ti-check"></i> 保存</button>
-    `;
+  if (editOpen && openEditIdx===i) {
+    const er = document.createElement('div'); er.className='song-inline-edit open';
+    er.innerHTML = `<input type="text" id="ei-name-${i}" value="${s.name}" placeholder="曲名" /><div class="inline-time-row"><input type="number" id="ei-min-${i}" value="${Math.floor(s.dur/60)}" min="0" max="30" placeholder="分" inputmode="numeric" /><input type="number" id="ei-sec-${i}" value="${s.dur%60}" min="0" max="59" placeholder="秒" inputmode="numeric" /><input type="number" id="ei-bpm-${i}" value="${s.bpm||''}" min="40" max="300" placeholder="BPM" inputmode="numeric" /></div><button class="btn sm" onclick="saveInlineEdit(${i})"><i class="ti ti-check"></i> 保存</button>`;
     item.appendChild(er);
   }
   return item;
 }
 
 function render() {
+  renderPatternBar();
   const list = document.getElementById('song-list');
-  list.innerHTML = '';
-  list.className = 'song-list' + (editOpen ? ' edit-mode' : '');
+  list.innerHTML=''; list.className='song-list'+(editOpen?' edit-mode':'');
+  const ss=songs();
 
   if (editOpen) {
-    songs.forEach((s, i) => list.appendChild(makeSongItem(s, i, i === currentIdx, i < currentIdx)));
+    ss.forEach((s,i)=>list.appendChild(makeSongItem(s,i,i===currentIdx,i<currentIdx)));
   } else {
-    const upcoming = songs.map((s,i)=>({s,i})).filter(({i})=>i>=currentIdx);
-    const done = songs.map((s,i)=>({s,i})).filter(({i})=>i<currentIdx);
-    upcoming.forEach(({s,i}) => list.appendChild(makeSongItem(s,i,i===currentIdx,false)));
-    if (done.length) {
-      const d = document.createElement('div'); d.className='divider'; list.appendChild(d);
-      done.forEach(({s,i}) => list.appendChild(makeSongItem(s,i,false,true)));
-    }
+    const upcoming=ss.map((s,i)=>({s,i})).filter(({i})=>i>=currentIdx);
+    const done=ss.map((s,i)=>({s,i})).filter(({i})=>i<currentIdx);
+    upcoming.forEach(({s,i})=>list.appendChild(makeSongItem(s,i,i===currentIdx,false)));
+    if(done.length){const d=document.createElement('div');d.className='divider';list.appendChild(d);done.forEach(({s,i})=>list.appendChild(makeSongItem(s,i,false,true)));}
   }
 
-  const remEl = document.getElementById('remaining-val');
-  if (!songs.length) { remEl.textContent='—'; remEl.className='remaining-val'; }
-  else if (finished) { remEl.textContent='+'+fmt(overSeconds); remEl.className='remaining-val over'; }
-  else { remEl.textContent=fmt(remainingDur()); remEl.className='remaining-val'; }
+  const remEl=document.getElementById('remaining-val');
+  if(!ss.length){remEl.textContent='—';remEl.className='remaining-val';}
+  else if(finished){remEl.textContent='+'+fmt(overSeconds);remEl.className='remaining-val over';}
+  else{remEl.textContent=fmt(remainingDur());remEl.className='remaining-val';}
 
-  document.getElementById('show-status').textContent =
-    finished ? '🔴 超過中' : playing ? '⚡ 演奏中' : currentIdx>0 ? '一時停止中' : '準備中';
-  document.getElementById('add-panel').className = 'add-panel' + (editOpen ? ' open' : '');
-  document.getElementById('edit-toggle-btn').innerHTML = editOpen
-    ? '<i class="ti ti-check"></i> 完了'
-    : '<i class="ti ti-edit"></i> 編集';
+  document.getElementById('show-status').textContent=finished?'🔴 超過中':playing?'⚡ 演奏中':currentIdx>0?'一時停止中':'準備中';
+  document.getElementById('add-panel').className='add-panel'+(editOpen?' open':'');
+  document.getElementById('edit-toggle-btn').innerHTML=editOpen?'<i class="ti ti-check"></i> 完了':'<i class="ti ti-edit"></i> 編集';
 }
 
 function saveInlineEdit(i) {
-  const name = document.getElementById(`ei-name-${i}`).value.trim();
-  const dur = (parseInt(document.getElementById(`ei-min-${i}`).value)||0)*60+(parseInt(document.getElementById(`ei-sec-${i}`).value)||0);
-  const bpm = parseInt(document.getElementById(`ei-bpm-${i}`).value)||0;
-  if (!name || dur<=0) return;
-  songs[i]={name,dur,bpm}; openEditIdx=-1; save(); render(); updateBpm();
+  const name=document.getElementById(`ei-name-${i}`).value.trim();
+  const dur=(parseInt(document.getElementById(`ei-min-${i}`).value)||0)*60+(parseInt(document.getElementById(`ei-sec-${i}`).value)||0);
+  const bpm=parseInt(document.getElementById(`ei-bpm-${i}`).value)||0;
+  if(!name||dur<=0)return;
+  songs()[i]={name,dur,bpm}; openEditIdx=-1; save(); render(); updateBpm();
 }
+function toggleEdit(){editOpen=!editOpen;if(!editOpen)openEditIdx=-1;render();}
 
-function toggleEdit() { editOpen=!editOpen; if(!editOpen) openEditIdx=-1; render(); }
-
-function tick() {
-  if (finished) { overSeconds++; render(); return; }
+function tick(){
+  if(finished){overSeconds++;render();return;}
   elapsed++;
-  if (elapsed >= songs[currentIdx].dur) {
-    elapsed=0; currentIdx++;
-    if (currentIdx >= songs.length) {
-      currentIdx=songs.length-1; finished=true; overSeconds=0;
-      stopBpm(); document.getElementById('bpm-label').textContent='';
-    } else { updateBpm(); }
+  if(elapsed>=songs()[currentIdx].dur){
+    elapsed=0;currentIdx++;
+    if(currentIdx>=songs().length){currentIdx=songs().length-1;finished=true;overSeconds=0;stopBpm();document.getElementById('bpm-label').textContent='';}
+    else{updateBpm();}
   }
   render();
 }
-
-function startPlay() {
-  if (!songs.length) return;
-  playing=true; timer=setInterval(tick,1000);
-  document.getElementById('play-icon').className='ti ti-player-pause';
-  document.getElementById('play-label').textContent='一時停止';
-  render(); updateBpm();
-}
-function stopPlay() {
-  playing=false; clearInterval(timer); stopBpm();
-  document.getElementById('bpm-label').textContent='';
-  document.getElementById('play-icon').className='ti ti-player-play';
-  document.getElementById('play-label').textContent='スタート';
-  render();
-}
-function togglePlay() { playing?stopPlay():startPlay(); }
-function nextSong() { if(finished)return; elapsed=0; if(currentIdx<songs.length-1)currentIdx++; render(); updateBpm(); }
-function prevSong() { finished=false; overSeconds=0; elapsed=0; if(currentIdx>0)currentIdx--; render(); updateBpm(); }
-function jumpTo(i) { finished=false; overSeconds=0; elapsed=0; currentIdx=i; render(); updateBpm(); }
-function resetAll() { stopPlay(); elapsed=0; currentIdx=0; finished=false; overSeconds=0; render(); }
-function addSong() {
+function startPlay(){if(!songs().length)return;playing=true;timer=setInterval(tick,1000);document.getElementById('play-icon').className='ti ti-player-pause';document.getElementById('play-label').textContent='一時停止';render();updateBpm();}
+function stopPlay(){playing=false;clearInterval(timer);stopBpm();document.getElementById('bpm-label').textContent='';document.getElementById('play-icon').className='ti ti-player-play';document.getElementById('play-label').textContent='スタート';render();}
+function togglePlay(){playing?stopPlay():startPlay();}
+function nextSong(){if(finished)return;elapsed=0;if(currentIdx<songs().length-1)currentIdx++;render();updateBpm();}
+function prevSong(){finished=false;overSeconds=0;elapsed=0;if(currentIdx>0)currentIdx--;render();updateBpm();}
+function jumpTo(i){finished=false;overSeconds=0;elapsed=0;currentIdx=i;render();updateBpm();}
+function resetAll(){stopPlay();elapsed=0;currentIdx=0;finished=false;overSeconds=0;render();}
+function addSong(){
   const name=document.getElementById('new-name').value.trim();
   const dur=(parseInt(document.getElementById('new-min').value)||0)*60+(parseInt(document.getElementById('new-sec').value)||0);
   const bpm=parseInt(document.getElementById('new-bpm').value)||0;
   if(!name||dur<=0)return;
-  songs.push({name,dur,bpm}); save();
-  document.getElementById('new-name').value='';
-  document.getElementById('new-bpm').value='';
-  render();
+  songs().push({name,dur,bpm});save();document.getElementById('new-name').value='';document.getElementById('new-bpm').value='';render();
 }
-function clearAll() {
-  if(!confirm('全曲削除しますか？'))return;
-  songs=[]; currentIdx=0; elapsed=0; finished=false; overSeconds=0; openEditIdx=-1;
-  stopBpm(); save(); render();
-}
+function clearSongs(){if(!confirm('このセットリストの曲を全削除しますか？'))return;currentPattern().songs=[];currentIdx=0;elapsed=0;finished=false;overSeconds=0;stopBpm();save();render();}
+
+document.getElementById('modal-input').addEventListener('keydown',e=>{if(e.key==='Enter')modalOk();});
 
 render();
 </script>
