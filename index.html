@@ -41,30 +41,17 @@
 
     /* ── パターンバー ── */
     .pattern-bar {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      margin-bottom: 10px;
-      overflow-x: auto;
-      padding-bottom: 4px;
+      display: flex; gap: 6px; align-items: center;
+      margin-bottom: 10px; overflow-x: auto; padding-bottom: 4px;
       -webkit-overflow-scrolling: touch;
     }
     .pattern-bar::-webkit-scrollbar { display: none; }
     .pattern-chip {
-      flex-shrink: 0;
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1px solid #333;
-      background: #1a1a1a;
-      color: #888;
-      font-size: 14px;
-      cursor: pointer;
-      white-space: nowrap;
-      touch-action: manipulation;
-      min-height: 36px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      flex-shrink: 0; padding: 6px 14px; border-radius: 20px;
+      border: 1px solid #333; background: #1a1a1a; color: #888;
+      font-size: 14px; cursor: pointer; white-space: nowrap;
+      touch-action: manipulation; min-height: 36px;
+      display: flex; align-items: center; gap: 4px;
     }
     .pattern-chip.active { border-color: #d4ff00; color: #d4ff00; background: #161a00; }
     .pattern-chip.add-btn { border-color: #444; color: #666; }
@@ -72,107 +59,76 @@
 
     .remaining-block { text-align: center; padding: 6px 0 2px; }
     .remaining-val {
-      font-size: 23vw;
-      font-weight: 700;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-      color: #d4ff00;
+      font-size: 23vw; font-weight: 700; line-height: 1;
+      font-variant-numeric: tabular-nums; color: #d4ff00;
       text-shadow: 0 0 30px #d4ff0099, 0 0 60px #d4ff0044;
       letter-spacing: -0.02em;
     }
-    .remaining-val.over {
-      color: #ff3b3b;
-      text-shadow: 0 0 30px #ff3b3b99, 0 0 60px #ff3b3b44;
-    }
+    .remaining-val.over { color: #ff3b3b; text-shadow: 0 0 30px #ff3b3b99, 0 0 60px #ff3b3b44; }
 
     .bpm-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      height: 38px;
-      margin: 2px 0;
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; height: 38px; margin: 2px 0;
     }
     .bpm-dot {
       width: 24px; height: 24px; border-radius: 50%;
-      background: #d4ff00;
-      box-shadow: 0 0 14px #d4ff00cc, 0 0 28px #d4ff0066;
-      opacity: 0;
-      transition: opacity 0.04s;
-      flex-shrink: 0;
+      background: #d4ff00; box-shadow: 0 0 14px #d4ff00cc, 0 0 28px #d4ff0066;
+      opacity: 0; transition: opacity 0.04s; flex-shrink: 0;
     }
     .bpm-dot.on { opacity: 1; }
     .bpm-label { font-size: 13px; color: #555; letter-spacing: 0.05em; }
 
     .controls {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      padding: 8px 0 12px;
+      display: flex; gap: 8px; justify-content: center; padding: 8px 0 12px;
     }
     .btn {
-      border: 1.5px solid #fff;
-      border-radius: 10px;
-      background: transparent;
-      color: #fff;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 12px 18px;
-      touch-action: manipulation;
-      min-height: 48px;
+      border: 1.5px solid #fff; border-radius: 10px; background: transparent;
+      color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; padding: 12px 18px; touch-action: manipulation; min-height: 48px;
     }
     .btn.main { padding: 12px 28px; font-size: 16px; }
     .btn.sm { padding: 10px 14px; font-size: 14px; }
     .btn.danger { border-color: #f87171; color: #f87171; }
 
     .section-label {
-      font-size: 10px;
-      color: #444;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 8px;
-      padding-left: 2px;
+      font-size: 10px; color: #444; letter-spacing: 0.1em;
+      text-transform: uppercase; font-weight: 600; margin-bottom: 8px; padding-left: 2px;
     }
+    .section-hint { font-size: 10px; color: #555; margin-left: 6px; text-transform: none; letter-spacing: 0; }
+
     .song-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 8px;
+      display: flex; flex-direction: column; gap: 6px;
+      flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px;
     }
 
     .song-item {
-      background: #1a1a1a;
-      border: 0.5px solid #2a2a2a;
-      border-radius: 12px;
-      overflow: hidden;
+      background: #1a1a1a; border: 0.5px solid #2a2a2a;
+      border-radius: 12px; overflow: hidden;
     }
     .song-item.active { border-color: #d4ff00; box-shadow: 0 0 10px #d4ff0033; }
     .song-item.done { opacity: 0.3; }
 
     .song-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 14px;
-      cursor: pointer;
-      user-select: none;
-      touch-action: manipulation;
-      min-height: 72px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 16px 14px; user-select: none; touch-action: manipulation; min-height: 72px;
     }
     .song-item.active .song-row { background: #161a00; }
 
     .song-num { font-size: 14px; color: #444; width: 22px; text-align: right; flex-shrink: 0; }
-    .song-name { flex: 1; font-size: 20px; font-weight: 600; color: #ddd; line-height: 1.2; }
+
+    .song-name-wrap {
+      flex: 1; display: flex; align-items: center; gap: 7px;
+      cursor: pointer; touch-action: manipulation;
+    }
+    .song-name { font-size: 20px; font-weight: 600; color: #ddd; line-height: 1.2; }
     .song-item.active .song-name { color: #d4ff00; }
+    .memo-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #d4ff00; flex-shrink: 0; opacity: 0;
+    }
+    .memo-dot.has-memo { opacity: 1; }
+
     .song-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex-shrink: 0; }
     .song-dur { font-size: 20px; color: #555; font-variant-numeric: tabular-nums; font-weight: 500; }
     .song-item.active .song-dur { color: #d4ff00; font-size: 22px; }
@@ -191,24 +147,14 @@
     .edit-mode .song-del-btn { display: flex; }
 
     .song-inline-edit {
-      display: none;
-      flex-direction: column;
-      gap: 8px;
-      padding: 12px 14px;
-      border-top: 0.5px solid #2a2a2a;
-      background: #141414;
+      display: none; flex-direction: column; gap: 8px;
+      padding: 12px 14px; border-top: 0.5px solid #2a2a2a; background: #141414;
     }
     .song-inline-edit.open { display: flex; }
     .song-inline-edit input {
-      background: #1f1f1f;
-      border: 0.5px solid #333;
-      border-radius: 8px;
-      color: #e0e0e0;
-      padding: 12px 14px;
-      font-size: 16px;
-      outline: none;
-      width: 100%;
-      -webkit-appearance: none;
+      background: #1f1f1f; border: 0.5px solid #333; border-radius: 8px;
+      color: #e0e0e0; padding: 12px 14px; font-size: 16px; outline: none;
+      width: 100%; -webkit-appearance: none;
     }
     .song-inline-edit input:focus { border-color: #d4ff00; }
     .inline-time-row { display: flex; gap: 8px; }
@@ -216,24 +162,13 @@
 
     .divider { height: 1px; background: #2a2a2a; margin: 4px 0; }
 
-    .add-panel {
-      display: none;
-      border-top: 0.5px solid #2a2a2a;
-      padding-top: 16px;
-      margin-top: 8px;
-    }
+    .add-panel { display: none; border-top: 0.5px solid #2a2a2a; padding-top: 16px; margin-top: 8px; }
     .add-panel.open { display: block; }
     .add-field { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
     .add-field input {
-      width: 100%;
-      background: #1a1a1a;
-      border: 0.5px solid #333;
-      border-radius: 10px;
-      color: #e0e0e0;
-      padding: 14px 16px;
-      font-size: 17px;
-      outline: none;
-      -webkit-appearance: none;
+      width: 100%; background: #1a1a1a; border: 0.5px solid #333;
+      border-radius: 10px; color: #e0e0e0; padding: 14px 16px;
+      font-size: 17px; outline: none; -webkit-appearance: none;
     }
     .add-field input:focus { border-color: #d4ff00; }
     .add-time-row { display: flex; gap: 8px; }
@@ -241,40 +176,52 @@
     .input-label { font-size: 11px; color: #555; margin-bottom: 4px; letter-spacing: 0.04em; }
     .add-actions { display: flex; gap: 8px; }
 
-    /* ── モーダル ── */
+    /* ── メモポップアップ ── */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75); z-index: 100;
+      align-items: center; justify-content: center;
+      padding: 20px;
     }
     .modal-overlay.open { display: flex; }
-    .modal {
-      background: #1a1a1a;
-      border: 0.5px solid #333;
-      border-radius: 16px;
-      padding: 22px;
-      width: 88%;
-      max-width: 360px;
+
+    .memo-modal {
+      background: #1a1a1a; border: 0.5px solid #2a2a2a;
+      border-radius: 16px; padding: 22px; width: 100%; max-width: 400px;
     }
-    .modal h3 { font-size: 17px; color: #f0f0f0; margin-bottom: 14px; font-weight: 600; }
-    .modal input {
-      width: 100%;
-      background: #111;
-      border: 0.5px solid #444;
-      border-radius: 10px;
-      color: #e0e0e0;
-      padding: 14px 16px;
-      font-size: 17px;
-      outline: none;
-      margin-bottom: 14px;
+    .memo-song-title { font-size: 20px; font-weight: 700; color: #d4ff00; margin-bottom: 4px; }
+    .memo-song-bpm { font-size: 13px; color: #555; margin-bottom: 16px; min-height: 18px; }
+    .memo-text-display {
+      font-size: 17px; color: #e0e0e0; line-height: 1.75;
+      white-space: pre-wrap; word-break: break-all;
+      min-height: 48px; margin-bottom: 20px;
+    }
+    .memo-text-display.empty { color: #444; font-style: italic; }
+    .memo-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+    .memo-textarea {
+      width: 100%; background: #111; border: 0.5px solid #444;
+      border-radius: 10px; color: #e0e0e0; padding: 14px 16px;
+      font-size: 16px; outline: none; resize: vertical; min-height: 110px;
+      margin-bottom: 14px; line-height: 1.7;
+      font-family: -apple-system, 'Helvetica Neue', sans-serif;
       -webkit-appearance: none;
     }
-    .modal input:focus { border-color: #d4ff00; }
-    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .memo-textarea:focus { border-color: #d4ff00; }
+
+    /* ── パターン名モーダル ── */
+    .name-modal {
+      background: #1a1a1a; border: 0.5px solid #333;
+      border-radius: 16px; padding: 22px; width: 100%; max-width: 360px;
+    }
+    .name-modal h3 { font-size: 17px; color: #f0f0f0; margin-bottom: 14px; font-weight: 600; }
+    .name-modal input {
+      width: 100%; background: #111; border: 0.5px solid #444;
+      border-radius: 10px; color: #e0e0e0; padding: 14px 16px;
+      font-size: 17px; outline: none; margin-bottom: 14px; -webkit-appearance: none;
+    }
+    .name-modal input:focus { border-color: #d4ff00; }
+    .name-modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
   </style>
 </head>
 <body>
@@ -310,7 +257,10 @@
     <button class="btn sm" onclick="resetAll()"><i class="ti ti-refresh"></i></button>
   </div>
 
-  <div class="section-label">セットリスト</div>
+  <div class="section-label">
+    セットリスト
+    <span class="section-hint">曲名タップでメモ表示</span>
+  </div>
   <div class="song-list" id="song-list"></div>
 
   <div class="add-panel" id="add-panel">
@@ -321,18 +271,9 @@
         <input type="text" id="new-name" placeholder="曲名" />
       </div>
       <div class="add-time-row">
-        <div style="flex:1">
-          <div class="input-label">分</div>
-          <input type="number" id="new-min" min="0" max="30" value="3" inputmode="numeric" />
-        </div>
-        <div style="flex:1">
-          <div class="input-label">秒</div>
-          <input type="number" id="new-sec" min="0" max="59" value="30" inputmode="numeric" />
-        </div>
-        <div style="flex:1">
-          <div class="input-label">BPM（任意）</div>
-          <input type="number" id="new-bpm" placeholder="—" min="40" max="300" inputmode="numeric" />
-        </div>
+        <div style="flex:1"><div class="input-label">分</div><input type="number" id="new-min" min="0" max="30" value="3" inputmode="numeric" /></div>
+        <div style="flex:1"><div class="input-label">秒</div><input type="number" id="new-sec" min="0" max="59" value="30" inputmode="numeric" /></div>
+        <div style="flex:1"><div class="input-label">BPM（任意）</div><input type="number" id="new-bpm" placeholder="—" min="40" max="300" inputmode="numeric" /></div>
       </div>
     </div>
     <div class="add-actions">
@@ -342,11 +283,34 @@
   </div>
 </div>
 
+<!-- メモポップアップ -->
+<div class="modal-overlay" id="memo-overlay">
+  <div class="memo-modal">
+    <div class="memo-song-title" id="memo-song-name"></div>
+    <div class="memo-song-bpm" id="memo-song-bpm"></div>
+    <div id="memo-view-area">
+      <div class="memo-text-display" id="memo-text-display"></div>
+      <div class="memo-actions">
+        <button class="btn sm" onclick="closeMemoOverlay()">閉じる</button>
+        <button class="btn sm" onclick="switchToMemoEdit()"><i class="ti ti-pencil"></i> メモ編集</button>
+      </div>
+    </div>
+    <div id="memo-edit-area" style="display:none">
+      <textarea class="memo-textarea" id="memo-textarea" placeholder="メモを入力..."></textarea>
+      <div class="memo-actions">
+        <button class="btn sm" onclick="cancelMemoEdit()">キャンセル</button>
+        <button class="btn sm" onclick="saveMemo()"><i class="ti ti-check"></i> 保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- パターン名モーダル -->
 <div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
+  <div class="name-modal">
     <h3 id="modal-title">新しいセットリスト</h3>
     <input type="text" id="modal-input" placeholder="例：ライブA、リハ用 など" maxlength="20" />
-    <div class="modal-actions">
+    <div class="name-modal-actions">
       <button class="btn sm" onclick="closeModal()">キャンセル</button>
       <button class="btn sm" onclick="modalOk()"><i class="ti ti-check"></i> OK</button>
     </div>
@@ -355,19 +319,19 @@
 
 <script>
 function loadData() {
-  return JSON.parse(localStorage.getItem('sl_multi_v1') || 'null') || {
+  return JSON.parse(localStorage.getItem('sl_multi_v2') || 'null') || {
     patterns: [
-      { id: 'p1', name: 'ライブA', songs: [
-        { name: "オープニング", dur: 240, bpm: 128 },
-        { name: "夜明けの向こうへ", dur: 210, bpm: 95 },
-        { name: "光の中で", dur: 195, bpm: 0 },
-        { name: "遠い記憶", dur: 225, bpm: 72 },
-        { name: "アンコール曲", dur: 240, bpm: 110 },
+      { id:'p1', name:'ライブA', songs:[
+        { name:"オープニング", dur:240, bpm:128, memo:"テンポ注意！イントロ4カウント" },
+        { name:"夜明けの向こうへ", dur:210, bpm:95, memo:"" },
+        { name:"光の中で", dur:195, bpm:0, memo:"Aメロはダイナミクス落とす" },
+        { name:"遠い記憶", dur:225, bpm:72, memo:"" },
+        { name:"アンコール曲", dur:240, bpm:110, memo:"MCからそのまま入る" },
       ]},
-      { id: 'p2', name: 'リハ用', songs: [
-        { name: "サウンドチェック", dur: 120, bpm: 0 },
-        { name: "嵐の前", dur: 200, bpm: 140 },
-        { name: "MC", dur: 300, bpm: 0 },
+      { id:'p2', name:'リハ用', songs:[
+        { name:"サウンドチェック", dur:120, bpm:0, memo:"モニター確認" },
+        { name:"嵐の前", dur:200, bpm:140, memo:"" },
+        { name:"MC", dur:300, bpm:0, memo:"新譜の告知を忘れずに" },
       ]},
     ],
     currentPatternId: 'p1'
@@ -375,138 +339,141 @@ function loadData() {
 }
 
 let data = loadData();
-let currentIdx = 0, elapsed = 0, playing = false, timer = null;
-let editOpen = false, openEditIdx = -1;
-let finished = false, overSeconds = 0, bpmTimer = null;
-let modalMode = null;
+let currentIdx=0, elapsed=0, playing=false, timer=null;
+let editOpen=false, openEditIdx=-1;
+let finished=false, overSeconds=0, bpmTimer=null;
+let modalMode=null, memoTargetIdx=-1;
 
-function save() { localStorage.setItem('sl_multi_v1', JSON.stringify(data)); }
-function currentPattern() { return data.patterns.find(p => p.id === data.currentPatternId) || data.patterns[0]; }
+function save() { localStorage.setItem('sl_multi_v2', JSON.stringify(data)); }
+function currentPattern() { return data.patterns.find(p=>p.id===data.currentPatternId)||data.patterns[0]; }
 function songs() { return currentPattern().songs; }
 function fmt(s) { s=Math.max(0,Math.round(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
-function remainingDur() { const ss=songs(); if(!ss.length) return 0; return ss.slice(currentIdx).reduce((a,s)=>a+s.dur,0)-elapsed; }
-function currentSongRemaining() { const ss=songs(); if(!ss[currentIdx]) return 0; return Math.max(0, ss[currentIdx].dur - elapsed); }
-function genId() { return 'p' + Date.now(); }
+function remainingDur() { const ss=songs(); if(!ss.length)return 0; return ss.slice(currentIdx).reduce((a,s)=>a+s.dur,0)-elapsed; }
+function currentSongRemaining() { const ss=songs(); if(!ss[currentIdx])return 0; return Math.max(0,ss[currentIdx].dur-elapsed); }
+function genId() { return 'p'+Date.now(); }
 
 function startBpm(bpm) {
-  stopBpm(); if (!bpm||bpm<=0) return;
-  const interval = 60000/bpm;
-  const dot = document.getElementById('bpm-dot');
-  const flash = () => { dot.classList.add('on'); setTimeout(()=>dot.classList.remove('on'), Math.min(interval*0.25,120)); };
-  flash(); bpmTimer = setInterval(flash, interval);
+  stopBpm(); if(!bpm||bpm<=0)return;
+  const interval=60000/bpm, dot=document.getElementById('bpm-dot');
+  const flash=()=>{dot.classList.add('on');setTimeout(()=>dot.classList.remove('on'),Math.min(interval*0.25,120));};
+  flash(); bpmTimer=setInterval(flash,interval);
 }
-function stopBpm() {
-  if(bpmTimer){clearInterval(bpmTimer);bpmTimer=null;}
-  const d=document.getElementById('bpm-dot'); if(d) d.classList.remove('on');
-}
+function stopBpm() { if(bpmTimer){clearInterval(bpmTimer);bpmTimer=null;} const d=document.getElementById('bpm-dot'); if(d)d.classList.remove('on'); }
 function updateBpm() {
-  const ss=songs(); const cur=ss[currentIdx]; const lbl=document.getElementById('bpm-label');
+  const ss=songs(),cur=ss[currentIdx],lbl=document.getElementById('bpm-label');
   if(playing&&cur&&cur.bpm>0){lbl.textContent=cur.bpm+' BPM';startBpm(cur.bpm);}
   else{lbl.textContent='';stopBpm();}
 }
 
+// ── メモ ──
+function openMemoOverlay(i) {
+  memoTargetIdx=i;
+  const s=songs()[i];
+  document.getElementById('memo-song-name').textContent=s.name;
+  document.getElementById('memo-song-bpm').textContent=s.bpm>0?s.bpm+' BPM':'';
+  const disp=document.getElementById('memo-text-display');
+  disp.textContent=s.memo||'（メモなし）';
+  disp.className='memo-text-display'+(s.memo?'':' empty');
+  document.getElementById('memo-view-area').style.display='block';
+  document.getElementById('memo-edit-area').style.display='none';
+  document.getElementById('memo-overlay').classList.add('open');
+}
+function closeMemoOverlay() { document.getElementById('memo-overlay').classList.remove('open'); memoTargetIdx=-1; }
+function switchToMemoEdit() {
+  document.getElementById('memo-textarea').value=songs()[memoTargetIdx].memo||'';
+  document.getElementById('memo-view-area').style.display='none';
+  document.getElementById('memo-edit-area').style.display='block';
+  setTimeout(()=>document.getElementById('memo-textarea').focus(),100);
+}
+function cancelMemoEdit() {
+  document.getElementById('memo-view-area').style.display='block';
+  document.getElementById('memo-edit-area').style.display='none';
+}
+function saveMemo() {
+  const memo=document.getElementById('memo-textarea').value.trim();
+  songs()[memoTargetIdx].memo=memo; save();
+  const disp=document.getElementById('memo-text-display');
+  disp.textContent=memo||'（メモなし）';
+  disp.className='memo-text-display'+(memo?'':' empty');
+  document.getElementById('memo-view-area').style.display='block';
+  document.getElementById('memo-edit-area').style.display='none';
+  render();
+}
+
+// ── パターンバー ──
 function renderPatternBar() {
-  const bar = document.getElementById('pattern-bar');
-  bar.innerHTML = '';
-  data.patterns.forEach(p => {
-    const chip = document.createElement('div');
-    chip.className = 'pattern-chip' + (p.id===data.currentPatternId?' active':'');
-    chip.textContent = p.name;
-    chip.onclick = () => {
-      if (p.id===data.currentPatternId && editOpen) { openRenameModal(p); return; }
-      switchPattern(p.id);
-    };
+  const bar=document.getElementById('pattern-bar'); bar.innerHTML='';
+  data.patterns.forEach(p=>{
+    const chip=document.createElement('div');
+    chip.className='pattern-chip'+(p.id===data.currentPatternId?' active':'');
+    chip.textContent=p.name;
+    chip.onclick=()=>{if(p.id===data.currentPatternId&&editOpen){openRenameModal(p);return;}switchPattern(p.id);};
     bar.appendChild(chip);
   });
-  if (editOpen) {
-    const addChip = document.createElement('div');
-    addChip.className = 'pattern-chip add-btn';
-    addChip.innerHTML = '<i class="ti ti-plus"></i> 新規';
-    addChip.onclick = openAddModal;
-    bar.appendChild(addChip);
-
-    if (data.patterns.length > 1) {
-      const delChip = document.createElement('div');
-      delChip.className = 'pattern-chip del-btn';
-      delChip.innerHTML = '<i class="ti ti-trash"></i> 削除';
-      delChip.onclick = deletePattern;
-      bar.appendChild(delChip);
-    }
+  if(editOpen){
+    const a=document.createElement('div');a.className='pattern-chip add-btn';a.innerHTML='<i class="ti ti-plus"></i> 新規';a.onclick=openAddModal;bar.appendChild(a);
+    if(data.patterns.length>1){const d=document.createElement('div');d.className='pattern-chip del-btn';d.innerHTML='<i class="ti ti-trash"></i> 削除';d.onclick=deletePattern;bar.appendChild(d);}
   }
 }
-
-function switchPattern(id) {
-  stopPlay(); elapsed=0; currentIdx=0; finished=false; overSeconds=0;
-  data.currentPatternId=id; save(); render();
+function switchPattern(id){stopPlay();elapsed=0;currentIdx=0;finished=false;overSeconds=0;data.currentPatternId=id;save();render();}
+function openAddModal(){modalMode='add';document.getElementById('modal-title').textContent='新しいセットリスト';document.getElementById('modal-input').value='';document.getElementById('modal-overlay').classList.add('open');setTimeout(()=>document.getElementById('modal-input').focus(),100);}
+function openRenameModal(p){modalMode='rename';document.getElementById('modal-title').textContent='名前を変更';document.getElementById('modal-input').value=p.name;document.getElementById('modal-overlay').classList.add('open');setTimeout(()=>document.getElementById('modal-input').focus(),100);}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+function modalOk(){
+  const name=document.getElementById('modal-input').value.trim();if(!name)return;
+  if(modalMode==='add'){const id=genId();data.patterns.push({id,name,songs:[]});data.currentPatternId=id;stopPlay();elapsed=0;currentIdx=0;finished=false;overSeconds=0;}
+  else if(modalMode==='rename'){currentPattern().name=name;}
+  save();closeModal();render();
 }
-function openAddModal() {
-  modalMode='add';
-  document.getElementById('modal-title').textContent='新しいセットリスト';
-  document.getElementById('modal-input').value='';
-  document.getElementById('modal-overlay').classList.add('open');
-  setTimeout(()=>document.getElementById('modal-input').focus(),100);
-}
-function openRenameModal(p) {
-  modalMode='rename';
-  document.getElementById('modal-title').textContent='名前を変更';
-  document.getElementById('modal-input').value=p.name;
-  document.getElementById('modal-overlay').classList.add('open');
-  setTimeout(()=>document.getElementById('modal-input').focus(),100);
-}
-function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
-function modalOk() {
-  const name=document.getElementById('modal-input').value.trim();
-  if(!name)return;
-  if(modalMode==='add'){
-    const id=genId();
-    data.patterns.push({id,name,songs:[]});
-    data.currentPatternId=id;
-    stopPlay(); elapsed=0; currentIdx=0; finished=false; overSeconds=0;
-  } else if(modalMode==='rename'){
-    currentPattern().name=name;
-  }
-  save(); closeModal(); render();
-}
-function deletePattern() {
+function deletePattern(){
   if(data.patterns.length<=1)return;
   if(!confirm(`「${currentPattern().name}」を削除しますか？`))return;
   const idx=data.patterns.findIndex(p=>p.id===data.currentPatternId);
-  data.patterns.splice(idx,1);
-  data.currentPatternId=data.patterns[Math.max(0,idx-1)].id;
-  stopPlay(); elapsed=0; currentIdx=0; finished=false; overSeconds=0;
-  save(); render();
+  data.patterns.splice(idx,1);data.currentPatternId=data.patterns[Math.max(0,idx-1)].id;
+  stopPlay();elapsed=0;currentIdx=0;finished=false;overSeconds=0;save();render();
 }
 
-function makeSongItem(s, i, isActive, isDone) {
-  const item = document.createElement('div');
-  item.className = 'song-item'+(isActive?' active':'')+(isDone?' done':'');
-  const displayTime = (isActive&&playing) ? fmt(currentSongRemaining()) : fmt(s.dur);
-  const row = document.createElement('div');
-  row.className = 'song-row';
-  row.onclick = () => { if(!editOpen) jumpTo(i); };
-  row.innerHTML = `<span class="song-num">${i+1}</span><span class="song-name">${s.name}</span><span class="song-meta"><span class="song-dur">${displayTime}</span>${s.bpm>0?`<span class="song-bpm-badge">${s.bpm} BPM</span>`:''}</span>`;
+// ── 曲アイテム ──
+function makeSongItem(s,i,isActive,isDone){
+  const item=document.createElement('div');
+  item.className='song-item'+(isActive?' active':'')+(isDone?' done':'');
+  const displayTime=(isActive&&playing)?fmt(currentSongRemaining()):fmt(s.dur);
+  const row=document.createElement('div');row.className='song-row';
 
-  const editBtn = document.createElement('button'); editBtn.className='song-edit-btn'; editBtn.innerHTML='<i class="ti ti-pencil"></i>';
-  editBtn.onclick = e => { e.stopPropagation(); openEditIdx=openEditIdx===i?-1:i; render(); };
-  const delBtn = document.createElement('button'); delBtn.className='song-del-btn'; delBtn.innerHTML='<i class="ti ti-trash"></i>';
-  delBtn.onclick = e => { e.stopPropagation(); songs().splice(i,1); if(currentIdx>=songs().length)currentIdx=Math.max(0,songs().length-1); if(openEditIdx===i)openEditIdx=-1; save(); render(); };
-  row.appendChild(editBtn); row.appendChild(delBtn); item.appendChild(row);
+  const numEl=document.createElement('span');numEl.className='song-num';numEl.textContent=i+1;
 
-  if (editOpen && openEditIdx===i) {
-    const er = document.createElement('div'); er.className='song-inline-edit open';
-    er.innerHTML = `<input type="text" id="ei-name-${i}" value="${s.name}" placeholder="曲名" /><div class="inline-time-row"><input type="number" id="ei-min-${i}" value="${Math.floor(s.dur/60)}" min="0" max="30" placeholder="分" inputmode="numeric" /><input type="number" id="ei-sec-${i}" value="${s.dur%60}" min="0" max="59" placeholder="秒" inputmode="numeric" /><input type="number" id="ei-bpm-${i}" value="${s.bpm||''}" min="40" max="300" placeholder="BPM" inputmode="numeric" /></div><button class="btn sm" onclick="saveInlineEdit(${i})"><i class="ti ti-check"></i> 保存</button>`;
+  const nameWrap=document.createElement('div');nameWrap.className='song-name-wrap';
+  nameWrap.onclick=()=>openMemoOverlay(i);
+  const nameEl=document.createElement('span');nameEl.className='song-name';nameEl.textContent=s.name;
+  const memoDot=document.createElement('span');memoDot.className='memo-dot'+(s.memo?' has-memo':'');
+  nameWrap.appendChild(nameEl);nameWrap.appendChild(memoDot);
+
+  const metaEl=document.createElement('span');metaEl.className='song-meta';
+  metaEl.innerHTML=`<span class="song-dur">${displayTime}</span>${s.bpm>0?`<span class="song-bpm-badge">${s.bpm} BPM</span>`:''}`;
+
+  const editBtn=document.createElement('button');editBtn.className='song-edit-btn';editBtn.innerHTML='<i class="ti ti-pencil"></i>';
+  editBtn.onclick=e=>{e.stopPropagation();openEditIdx=openEditIdx===i?-1:i;render();};
+  const delBtn=document.createElement('button');delBtn.className='song-del-btn';delBtn.innerHTML='<i class="ti ti-trash"></i>';
+  delBtn.onclick=e=>{e.stopPropagation();songs().splice(i,1);if(currentIdx>=songs().length)currentIdx=Math.max(0,songs().length-1);if(openEditIdx===i)openEditIdx=-1;save();render();};
+
+  row.appendChild(numEl);row.appendChild(nameWrap);row.appendChild(metaEl);
+  row.appendChild(editBtn);row.appendChild(delBtn);
+  item.appendChild(row);
+
+  if(editOpen&&openEditIdx===i){
+    const er=document.createElement('div');er.className='song-inline-edit open';
+    er.innerHTML=`<input type="text" id="ei-name-${i}" value="${s.name}" placeholder="曲名"/><div class="inline-time-row"><input type="number" id="ei-min-${i}" value="${Math.floor(s.dur/60)}" min="0" max="30" placeholder="分" inputmode="numeric"/><input type="number" id="ei-sec-${i}" value="${s.dur%60}" min="0" max="59" placeholder="秒" inputmode="numeric"/><input type="number" id="ei-bpm-${i}" value="${s.bpm||''}" min="40" max="300" placeholder="BPM" inputmode="numeric"/></div><button class="btn sm" onclick="saveInlineEdit(${i})"><i class="ti ti-check"></i> 保存</button>`;
     item.appendChild(er);
   }
   return item;
 }
 
-function render() {
+function render(){
   renderPatternBar();
-  const list = document.getElementById('song-list');
-  list.innerHTML=''; list.className='song-list'+(editOpen?' edit-mode':'');
+  const list=document.getElementById('song-list');
+  list.innerHTML='';list.className='song-list'+(editOpen?' edit-mode':'');
   const ss=songs();
-
-  if (editOpen) {
+  if(editOpen){
     ss.forEach((s,i)=>list.appendChild(makeSongItem(s,i,i===currentIdx,i<currentIdx)));
   } else {
     const upcoming=ss.map((s,i)=>({s,i})).filter(({i})=>i>=currentIdx);
@@ -514,23 +481,22 @@ function render() {
     upcoming.forEach(({s,i})=>list.appendChild(makeSongItem(s,i,i===currentIdx,false)));
     if(done.length){const d=document.createElement('div');d.className='divider';list.appendChild(d);done.forEach(({s,i})=>list.appendChild(makeSongItem(s,i,false,true)));}
   }
-
   const remEl=document.getElementById('remaining-val');
   if(!ss.length){remEl.textContent='—';remEl.className='remaining-val';}
   else if(finished){remEl.textContent='+'+fmt(overSeconds);remEl.className='remaining-val over';}
   else{remEl.textContent=fmt(remainingDur());remEl.className='remaining-val';}
-
   document.getElementById('show-status').textContent=finished?'🔴 超過中':playing?'⚡ 演奏中':currentIdx>0?'一時停止中':'準備中';
   document.getElementById('add-panel').className='add-panel'+(editOpen?' open':'');
   document.getElementById('edit-toggle-btn').innerHTML=editOpen?'<i class="ti ti-check"></i> 完了':'<i class="ti ti-edit"></i> 編集';
 }
 
-function saveInlineEdit(i) {
+function saveInlineEdit(i){
   const name=document.getElementById(`ei-name-${i}`).value.trim();
   const dur=(parseInt(document.getElementById(`ei-min-${i}`).value)||0)*60+(parseInt(document.getElementById(`ei-sec-${i}`).value)||0);
   const bpm=parseInt(document.getElementById(`ei-bpm-${i}`).value)||0;
   if(!name||dur<=0)return;
-  songs()[i]={name,dur,bpm}; openEditIdx=-1; save(); render(); updateBpm();
+  const memo=songs()[i].memo||'';
+  songs()[i]={name,dur,bpm,memo};openEditIdx=-1;save();render();updateBpm();
 }
 function toggleEdit(){editOpen=!editOpen;if(!editOpen)openEditIdx=-1;render();}
 
@@ -556,7 +522,8 @@ function addSong(){
   const dur=(parseInt(document.getElementById('new-min').value)||0)*60+(parseInt(document.getElementById('new-sec').value)||0);
   const bpm=parseInt(document.getElementById('new-bpm').value)||0;
   if(!name||dur<=0)return;
-  songs().push({name,dur,bpm});save();document.getElementById('new-name').value='';document.getElementById('new-bpm').value='';render();
+  songs().push({name,dur,bpm,memo:''});save();
+  document.getElementById('new-name').value='';document.getElementById('new-bpm').value='';render();
 }
 function clearSongs(){if(!confirm('このセットリストの曲を全削除しますか？'))return;currentPattern().songs=[];currentIdx=0;elapsed=0;finished=false;overSeconds=0;stopBpm();save();render();}
 
